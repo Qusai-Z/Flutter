@@ -36,17 +36,18 @@ class login extends StatelessWidget {
                   TextFormField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'sdsdssdsd';
-                      }
-                      return null;
-                    },
                     onFieldSubmitted: (String value) {
                       print(value);
                     },
                     onChanged: (String value) {
                       print(value);
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Email must not be empty !';
+                      }
+
+                      return null;
                     },
                     decoration: InputDecoration(
                       labelText: 'Email Address',
@@ -69,6 +70,11 @@ class login extends StatelessWidget {
                     onChanged: (String value) {
                       print(value);
                     },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Wrong password';
+                      }
+                    },
                     decoration: InputDecoration(
                       labelText: 'Password',
                       prefixIcon: Icon(
@@ -86,24 +92,35 @@ class login extends StatelessWidget {
                   defaultButton(
                       text: 'LOGIN',
                       width: double.infinity,
-                      DecorationRadius: 20),
+                      function: () {
+                        if (formKey.currentState!.validate()) {
+                          return (emailController.text);
+                        }
+                      }),
                   SizedBox(
                     height: 10.0,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Don\'t have an account?',
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Register Now',
-                        ),
-                      ),
-                    ],
+                  defaultButton(
+                      text: 'REGISTER',
+                      width: double.infinity,
+                      function: () {}),
+                  SizedBox(
+                    height: 10.0,
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       'Don\'t have an account?',
+                  //     ),
+                  //     TextButton(
+                  //       onPressed: () {},
+                  //       child: Text(
+                  //         'Register Now',
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
