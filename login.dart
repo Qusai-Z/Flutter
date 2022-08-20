@@ -6,7 +6,8 @@ import 'package:rs/shared/components/components.dart';
 class login extends StatelessWidget {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _Key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class login extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Form(
-              key: formKey,
+              key: _Key,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -36,18 +37,16 @@ class login extends StatelessWidget {
                   TextFormField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    onFieldSubmitted: (String value) {
+                    onFieldSubmitted: (value) {
                       print(value);
                     },
-                    onChanged: (String value) {
+                    onChanged: (value) {
                       print(value);
                     },
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Email must not be empty !';
                       }
-
-                      return null;
                     },
                     decoration: InputDecoration(
                       labelText: 'Email Address',
@@ -64,17 +63,6 @@ class login extends StatelessWidget {
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    onFieldSubmitted: (String value) {
-                      print(value);
-                    },
-                    onChanged: (String value) {
-                      print(value);
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Wrong password';
-                      }
-                    },
                     decoration: InputDecoration(
                       labelText: 'Password',
                       prefixIcon: Icon(
@@ -85,25 +73,37 @@ class login extends StatelessWidget {
                       ),
                       border: OutlineInputBorder(),
                     ),
+                    onFieldSubmitted: (value) {
+                      print(value);
+                    },
+                    onChanged: (value) {
+                      print(value);
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Wrong password';
+                      }
+                    },
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                  defaultButton(
-                      text: 'LOGIN',
-                      width: double.infinity,
-                      function: () {
-                        if (formKey.currentState!.validate()) {
-                          return (emailController.text);
-                        }
-                      }),
+
+                  MaterialButton(
+                    onPressed: () {
+                      if (_Key.currentState!.validate()) {
+                        _Key.currentState!.save();
+                        print("saved");
+                      }
+                    },
+                    child: defaultButton(
+                        text: 'LOGIN', width: double.infinity, function: () {}),
+                  ),
+
                   SizedBox(
                     height: 10.0,
                   ),
-                  defaultButton(
-                      text: 'REGISTER',
-                      width: double.infinity,
-                      function: () {}),
+
                   SizedBox(
                     height: 10.0,
                   ),
