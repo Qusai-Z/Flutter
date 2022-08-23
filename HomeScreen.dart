@@ -29,8 +29,25 @@ class _HomeScreen extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Screens[
-          CurrentIndex], //change the Screen when the current index is changed
+      body: Screens[CurrentIndex],
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          print(
+            await getName().then((value) {
+              throw ('Some erroree');
+              print(value); //print getName() method
+              print("Jamal"); // any operation you would like
+            }).catchError(
+              (error) {
+                print(
+                    'Error is ${error.toString()}'); //print this message when error occured
+              },
+            ),
+          ); //await:   wait the process
+        },
+        child: Icon(Icons.add),
+      ), //change the Screen when the current index is changed
       appBar: AppBar(
         title: Center(child: Text(Titles[CurrentIndex])),
         // title: Center(child: Text('${Titles[CurrentIndex]}')),
@@ -59,5 +76,10 @@ class _HomeScreen extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  Future<String> getName() async {
+    //async  ... move the process to the backend
+    return 'KARIM';
   }
 }
